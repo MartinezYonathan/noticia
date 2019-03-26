@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Practica2</title>
+<style type="text/css">
+body {
+	color: purple;
+	background-color: #d8da3d
+}
+</style>
+</head>
+<body onload="matriz()">
+
+	<script>
+
+var f = document.createElement("form");
+var tamMatriz = 10;
+function matriz(){
+for(i=0;i<tamMatriz;i++)
+{
+	for ( j = 0; j < tamMatriz; j += 1 ) {     
+   var x = document.createElement("input"); //input-checkbox
+   x.setAttribute('type',"checkbox");
+   x.setAttribute('class','checkbox');
+   x.style.cssText = 'width:30px;height:30px;';
+
+  // x.setAttribute('unchecked',"");
+   //x.setAttribute('value',"0"+i);
+    f.appendChild(x);
+}
+      var a = document.createElement("br");
+   f.appendChild(a);
+}
+ document.getElementsByTagName('body')[0].appendChild(f);
+ //marcar();
+
+}
+
+var s = document.createElement("input"); //submit
+s.setAttribute('type',"submit");
+s.setAttribute('value',"verificar");
+s.setAttribute('onClick',"check(1,1,0,tamMatriz);");
+document.getElementsByTagName('body')[0].appendChild(s);
+
+function marcar(){
+for(i=1;i<=((tamMatriz*tamMatriz)-1);i++){
+
+	var aleatorio=Math.round(Math.random()*1);
+	if(aleatorio==1){
+		document.forms[0].elements[i].checked=true
+	}
+	else
+		document.forms[0].elements[i].checked=false
+}
+
+}
+
+function check(posx,posy,inicio,tamMatriz){
+
+	var totalVecinosVivos = 0;
+	var totalVecinosMuertos = 0;
+
+	
+
+
+	for(i=0;i<tamMatriz;i++){
+		for ( j = 0; j < tamMatriz; j += 1 ) {   
+
+			var posArreglo = tamMatriz*posy+posx-(tamMatriz+1);
+			
+		if(document.forms[0].elements[posArreglo].checked==true){
+			//verifica Derecha
+			totalVecinosVivos += verificar(posx+1,posy);
+			//Verifica derecha abajo
+			totalVecinosVivos += verificar(posx+1,posy+1);
+			//Verifica abjo
+			totalVecinosVivos += verificar(posx,posy+1);
+			//Verifica abajo izquierda
+			totalVecinosVivos += verificar(posx-1,posy+1);
+			//Verifica izquierda
+			totalVecinosVivos += verificar(posx-1,posy);
+			//Verifica arriba izquierda
+			totalVecinosVivos += verificar(posx-1,posy-1);
+			//Verifica arriba
+			totalVecinosVivos += verificar(posx,posy-1);
+			//Verifica arriba derecha
+			totalVecinosVivos += verificar(posx+1,posy-1);
+		}else{
+			//verifica Derecha
+			totalVecinosMuertos += verificar(posx+1,posy);
+			//Verifica derecha abajo
+			totalVecinosMuertos += verificar(posx+1,posy+1);
+			//Verifica abjo
+			totalVecinosMuertos += verificar(posx,posy+1);
+			//Verifica abajo izquierda
+			totalVecinosMuertos += verificar(posx-1,posy+1);
+			//Verifica izquierda
+			totalVecinosMuertos += verificar(posx-1,posy);
+			//Verifica arriba izquierda
+			totalVecinosMuertos += verificar(posx-1,posy-1);
+			//Verifica arriba
+			totalVecinosMuertos += verificar(posx,posy-1);
+			//Verifica arriba derecha
+			totalVecinosMuertos += verificar(posx+1,posy-1);
+
+		}
+		if(totalVecinosVivos <2 || totalVecinosVivos >3){
+			document.forms[0].elements[posArreglo].checked=false;
+		}
+		if(totalVecinosMuertos == 3){
+			document.forms[0].elements[posArreglo].checked=true;
+		}
+		if (posx < tamMatriz) {
+			check(posx+1,posy,inicio+1,tamMatriz);
+		}else{
+			check(0,posy+1,inicio+1,tamMatriz);
+		}
+		}}
+}
+
+function verificar(posx,posy){
+
+	if(posx > tamMatriz || posy < 1 || posy >= tamMatriz || posx < 1 )
+	{
+		return 0
+	}
+
+	var posArreglo = tamMatriz*posy+posx-(tamMatriz+1);
+
+	if(document.forms[0].elements[posArreglo].checked==true){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+
+</script>
+</body>
+</html>
