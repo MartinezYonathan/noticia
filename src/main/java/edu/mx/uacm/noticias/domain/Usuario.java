@@ -25,8 +25,8 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	//Estas anotaciones no son parte de hibernate sino que son validaciones
-	//antes de la transaccion
+	// Estas anotaciones no son parte de hibernate sino que son validaciones
+	// antes de la transaccion
 	@NotBlank
 	@Size(min = 3, max = 50)
 	private String nombre;
@@ -123,6 +123,17 @@ public class Usuario {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellidoP=" + apellidoP + ", apellidoM=" + apellidoM
+				+ ", correo=" + correo + ", pass=" + pass + ", nickname=" + nickname + "]";
 	}
 
 }
